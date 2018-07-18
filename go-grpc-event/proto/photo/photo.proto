@@ -1,0 +1,106 @@
+syntax = "proto3";
+
+package photo;
+
+import "google/api/annotations.proto";
+// import "google/protobuf/timestamp.proto";
+import "github.com/alextanhongpin/go-grpc-event/proto/user/user.proto";
+import "github.com/gogo/protobuf/gogoproto/gogo.proto";
+
+service PhotoService {
+  rpc GetPhotos (GetPhotosRequest) returns (GetPhotosResponse) {
+    option (google.api.http) = {
+      get: "/v1/photos"
+    };
+  }
+  rpc GetPhoto (GetPhotoRequest) returns (GetPhotoResponse) {
+    option (google.api.http) = {
+      get: "/v1/photos/{id}"
+    };
+  }
+  rpc CreatePhoto (CreatePhotoRequest) returns (CreatePhotoResponse) {
+    option (google.api.http) = {
+      post: "/v1/photos",
+      body: "*"
+    };
+  }
+
+  rpc UpdatePhoto (UpdatePhotoRequest) returns (UpdatePhotoResponse) {
+    option (google.api.http) = {
+      patch: "/v1/photos/{data.id}",
+      body: "*"
+    };
+  }
+
+  rpc DeletePhoto (DeletePhotoRequest) returns (DeletePhotoResponse) {
+    option (google.api.http) = {
+      delete: "/v1/photos/{id}"
+    };
+  }
+}
+
+message Photo {
+  // [(gogoproto.customname) = "ID"]
+  string id = 1 [(gogoproto.jsontag) = "-"];
+  // This will also not work with grpc-gateway
+  // google.protobuf.Timestamp created_at = 2 [(gogoproto.moretags) = "bson:\"created_at\"", (gogoproto.stdtime) = true, (gogoproto.nullable) = false];
+  string created_at = 2 [(gogoproto.moretags) = "bson:\"created_at\""];
+  string updated_at = 3 [(gogoproto.moretags) = "bson:\"updated_at\""];
+  string name = 4;
+  string src = 5;
+  string caption = 6;
+  bool is_published = 7 [(gogoproto.moretags) = "bson:\"is_published\""];
+  bool is_anonymous = 8 [(gogoproto.moretags) = "bson:\"is_anonymous\""];
+  grpc.user.User user = 10;
+
+  string mgoid = 100 [(gogoproto.nullable) = false, (gogoproto.customtype) = "gopkg.in/mgo.v2/bson.ObjectId", (gogoproto.moretags) = "bson:\"_id,omitempty\"", (gogoproto.jsontag) = "-"];
+}
+
+message GetPhotosRequest {
+  string query = 1;
+  int64 page = 2;
+  int64 per_page = 3 [(gogoproto.moretags) = "bson:\"per_page\""];
+}
+
+message GetPhotosResponse {
+  repeated Photo data = 1;
+  int64 total_count = 2 [(gogoproto.moretags) = "bson:\"total_count\""];
+  string next = 3;
+  string last = 4;
+  string first = 5;
+  string prev = 6;
+}
+
+message GetPhotoRequest {
+  string id = 1;
+}
+
+message GetPhotoResponse {
+  Photo data = 1;
+}
+
+message CreatePhotoRequest {
+  repeated Photo data = 1;
+}
+
+message CreatePhotoResponse {
+  repeated string ids = 1;
+}
+
+message UpdatePhotoRequest {
+  Photo data = 1;
+}
+
+message UpdatePhotoResponse {
+  bool ok = 1;
+}
+
+message DeletePhotoRequest {
+  // This will not work with grpc-gateway
+  // string id = 1 [(gogoproto.customname) = "ID"];
+  string id = 1;
+}
+
+message DeletePhotoResponse {
+  bool ok = 1;
+}

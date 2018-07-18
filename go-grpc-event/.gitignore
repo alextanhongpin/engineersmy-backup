@@ -1,0 +1,4 @@
+data
+.env
+docker-compose.production.yml
+scripts

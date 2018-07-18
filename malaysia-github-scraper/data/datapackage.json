@@ -1,0 +1,23 @@
+{
+  "resources": [
+    {
+      "url": "https://github.com/mbostock/topojson/raw/master/examples/us-10m.json",
+      "name": "repo",
+      "mediatype": "application/json",
+      "description": "Github users and repositories in Malaysia"
+    }
+  ],
+  "name": "github-users-malaysia",
+  "title": "Github Users in Malaysia",
+  "description": "Display a list of Github Users in Malaysia and their public repositories from 2008 until June 2017",
+  "homepage": "",
+  "version": "0.1.0",
+  "license": "ODC-PDDL-1.0",
+  "contributors": [
+    {
+      "name": "alextanhongpin",
+      "email": "alextan220990@gmail.com",
+      "web": "www.alextanhongpin.com"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Top 20 Programming Languages used in Malaysia</title>
+	<style type="text/css">
+		
+		body {
+			font-family: Avenir, Helvetica, Arial;
+		}
+
+		#d3 {
+			max-width: 810px;
+			max-height: 540px;
+			margin: auto;
+			/* so that we can position the tooltip absolute to the container */
+
+		}
+
+  		svg {
+			border-radius: 5px;
+			box-shadow: 0 5px 15px rgba(0, 0, 0, .2);
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>Top 20 Programming Languages used in Malaysia</h1>
+
+	<h3>Shows the frequency of the languages used based on data from Github Users in Malaysia (June 2017).</h3>
+
+	<h3>The following criteria has to be met:</h3>
+	<ul>
+		<li>has `Malaysia` in the location</li>
+    <li>only public repos are taken into account (no forked repos)</li>
+    <li>Early github accounts does not have the field language exposed in the api, so that is not taken into account</li>
+    <li>One repo can have multiple languages (e.g. javascript, html, css)</li>
+    <li>Private repositories are not taken into account</li>
+	</ul>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<div id='d3'></div>
+
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script type="text/javascript" src="./language.v2.js"></script>
+</body>
+</html>

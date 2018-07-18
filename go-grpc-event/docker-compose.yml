@@ -1,0 +1,91 @@
+version: "3"
+services:
+  mongo: 
+    image: mongo:3.4.9
+    env_file: .env
+    ports:
+      - 127.0.0.1:27017:27017
+    volumes:
+      - ./data/db:/data/db
+      - ./mongo/:/docker-entrypoint-initdb.d/
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+    restart: always
+  # metabase:
+  #   image: metabase/metabase
+  #   ports:
+  #     - 3000
+  #   volumes:
+  #     - ./metabase-data:/metabase-data
+  #   environment:
+  #     - MD_DB_FILE=/metabase-data/metabase.db
+
+  # openzipkin:
+  #   image: openzipkin/zipkin
+  #   ports:
+  #     - 9411:9411
+
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - 127.0.0.1:5775:5775/udp # Accept zipkin.thrift over compact thrift protocol
+      - 127.0.0.1:6831:6831/udp # Accept jaeger.thrift ofer compact thrift protocol
+      - 127.0.0.1:6832:6832/udp # Accept jaeger.thrift over binary thrift protocol
+      - 127.0.0.1:5778:5778 # Serve configs
+      - 127.0.0.1:16686:16686 # Serve frontend
+      - 127.0.0.1:14268:14268 # Accept zipkin.thrift from zipkin senders
+    restart: always
+
+  event:
+    image: alextanhongpin/event:1.0.2
+    ports:
+      - 127.0.0.1::8080
+    environment:
+      - PORT=:8080
+      - MGO_HOST=mongo:27017 # Mongo
+      - MGO_USR=${MONGO_USER}
+      - MGO_PWD=${MONGO_PASS}
+      - TRACER=${EVENT_TRACER} # Trace
+      - TRACER_SAMPLER_URL=jaeger:5775
+      - SLACK_CHANNEL=${SLACK_CHANNEL} # Slack
+      - SLACK_USERNAME=${SLACK_USERNAME}
+      - SLACK_ICON=${SLACK_ICON}
+      - SLACK_WEBHOOK=${SLACK_WEBHOOK}
+    restart: always
+
+  photo:
+    image: alextanhongpin/photo:1.0.0
+    ports:
+      - 127.0.0.1::8080
+    environment:
+      - PORT=:8080
+      - MGO_HOST=mongo:27017
+      - MGO_USR=${MONGO_USER}
+      - MGO_PWD=${MONGO_PASS}
+      - TRACER=${PHOTO_TRACER}
+      - TRACER_SAMPLER_URL=jaeger:5775
+    restart: always
+
+  gateway:
+    image: alextanhongpin/gateway:1.0.2
+    ports:
+      - 127.0.0.1:3000:3000
+    environment:
+      - PORT=${GATEWAY_PORT}
+      - PHOTO_ADDR=photo:8080
+      - EVENT_ADDR=event:8080
+      - AUTH0_JWK=${AUTH0_JWK}
+      - AUTH0_ISS=${AUTH0_ISS}
+      - AUTH0_AUD=${AUTH0_AUD}
+      - AUTH0_WHITELIST=${AUTH0_WHITELIST}
+      - TRACER=${GATEWAY_TRACER}
+      - TRACER_SAMPLER_URL=jaeger:5775
+    restart: always
+  
+  # webui:
+  #   image: alextanhongpin/event-webui:1.0.1
+  #   ports:
+  #    - 127.0.0.1:31000:8080
+  #   restart: always

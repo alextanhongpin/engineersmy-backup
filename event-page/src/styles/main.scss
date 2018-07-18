@@ -1,0 +1,147 @@
+
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+#wrapper {
+  @extend %font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: $pickled-bluewood;
+  perspective: 3000px;
+  background: $alto;
+}
+
+input, textarea {
+  @extend %font;
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr) 20px;
+  grid-template-rows: 40px 5px 1fr 40px;
+  min-height: 100vh;
+  height: 100%;
+  transition: .174s all ease-out;
+  background: $gallery;
+}
+
+
+#app.is-active {
+  transform: translate3d(120px, 0, 0) scale(0.85) rotateY(-5deg);
+}
+main {
+  grid-row: 3;
+}
+
+main {
+  // text-align: center;
+  height: 100%;
+  display: block;
+  width: 100%;
+  grid-column: 2 / 3;
+}
+
+// Material-icons configuration
+.material-icons.md-18 {
+  font-size: 18px;
+}
+.material-icons.md-24 {
+  font-size: 24px;
+}
+.material-icons.md-48 {
+  font-size: 48px;
+}
+
+.link {
+  @extend %link;
+}
+
+
+.no-link {
+  @extend %link;
+  text-decoration: none;
+}
+
+.link-hover {
+  @extend %link-hover;
+}
+
+
+.label {
+  @extend %label;
+}
+
+.text-input {
+  @extend %text-input;
+}
+
+.button--large {
+  height: 35px;
+}
+.button {
+  @extend %button;
+}
+.button:active {
+  @extend %button-pressed;
+}
+.button:disabled {
+  @extend %button-disabled;
+}
+.button-outline {
+  @extend %button;
+  border: 1px solid $heliotrope;
+  border-bottom: 2px solid $heliotrope;
+  background: white;
+  color: $heliotrope;
+}
+.button-outline:active {
+  @extend %button-pressed;
+  background: white;
+  border: 1px solid $heliotrope;
+}
+.button-outline:disabled {
+  @extend %button-disabled;
+  background: none;
+  border-color: rgba($heliotrope, .5);
+  color: rgba($heliotrope, .75);
+}
+
+.section-title {
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 14px;
+  color: $dove-gray;
+}
+
+
+
+
+.h1 {
+  @extend %h1;
+  font-weight: bold;
+}
+.h2 {
+  @extend %h2;
+  font-weight: bold;
+}
+.h3 {
+  @extend %h3;
+  font-weight: medium;
+}
+.h4 {
+  @extend %h4;
+}
+.h5 {
+  @extend %h5;
+}
+.h6 {
+  @extend %h6;
+}
+

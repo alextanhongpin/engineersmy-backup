@@ -1,0 +1,12 @@
+version: '3'
+services:
+  backup:
+    image: alextanhongpin/event-backup:1.0.0
+    env_file: .env
+    ports:
+      - 127.0.0.1::8080
+    environment:
+      - PORT=:8080
+      - FILE_URL=${FILE_URL}
+      - EVENTS_URL=${EVENTS_URL}
+      - GITHUB_TOKEN=${GITHUB_TOKEN}

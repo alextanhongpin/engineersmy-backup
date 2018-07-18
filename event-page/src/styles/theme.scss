@@ -1,0 +1,205 @@
+// :root {
+//   --coral-red: #FF4444;
+// }
+
+// The z-index layering
+$layer-100: 100;
+$layer-200: 200;
+
+// Heights
+$height-100: 30px;
+
+// Width
+$width-100: 80px;
+
+// Dimensions
+$dim-50: 5px;
+$dim-100: 10px;
+$dim-200: 20px;
+$dim-300: 30px;
+$dim-400: 35px;
+
+// Responsive breakpoints
+$breakpoint-100: 480px;
+
+// Loop to generate headings in modular scale
+// @for $i from 0 through 5 {
+//   .h#{6 - $i} {
+//     font-size: pow(1.25em, $i - 1);
+//   }
+// }
+
+$h6: 0.8em;
+$h5: 1em;
+$h4: 1.25em;
+$h3: 1.5625em;
+$h2: 1.953125em;
+$h1: 2.44140625em;
+
+%h6 {
+  font-size: $h6;
+}
+
+%h5 {
+  font-size: $h5;
+}
+
+%h4 {
+  font-size: $h4;
+}
+
+%h3 {
+  font-size: $h3;
+}
+
+%h2 {
+  font-size: $h2;
+}
+
+%h1 {
+  font-size: $h1;
+}
+
+$font-ratio: 0.8;
+@media(max-width: $breakpoint-100) {
+  %h6 {
+    font-size: #{$h6 * $font-ratio};
+  }
+
+  %h5 {
+    font-size: #{$h5 * $font-ratio};
+  }
+
+  %h4 {
+    font-size: #{$h4 * $font-ratio};
+  }
+
+  %h3 {
+    font-size: #{$h3 * $font-ratio};
+  }
+
+  %h2 {
+    font-size: #{$h2 * $font-ratio};
+  }
+
+  %h1 {
+    font-size: #{$h1 * $font-ratio};
+  }
+}
+
+
+
+// Borders
+$border-radius-100: 3px;
+$border-radius-200: 5px;
+
+// The grid-layout max-width
+$max-column-width: 960px;
+
+// Colors
+
+$alto: #DDDDDD;
+$carrot-orange: #EC912B;
+$coral-red: #FF4444;
+$dove-gray: #666666;
+$gallery: #EEEEEE;
+$heliotrope: #5873ff;
+$jungle-green: #2BA06D;
+$pickled-bluewood: #2C3E50;
+
+$color-primary: $heliotrope;
+
+%link {
+  color: $heliotrope;
+  font-weight: bold;
+  text-decoration: underline;
+}
+%link-hover {
+  color: $heliotrope;
+  font-weight: bold;
+  text-decoration: none;
+}
+%link-hover:hover {
+  text-decoration: underline;
+}
+
+%font {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+
+%page {
+    max-width: $max-column-width;
+    margin: auto;
+    width: 100%;
+    background: white;
+    // margin: $dim-200 auto;
+    margin: auto;
+    padding: 0 $dim-200;
+}
+
+
+%label {
+    font-weight: bold;
+    display: block;
+    height: $height-100;
+    line-height: $height-100;
+}
+
+%text-input {
+    height: $height-100;
+    width: 100%;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid $alto;
+    padding: 0 5px;
+}
+%button > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+%button {
+  @extend %h6;
+  font-weight: 500;
+  height: 30px;
+  background: $heliotrope;
+  border: none;
+  color: white;
+  border-bottom: 2px solid darken($heliotrope, 10%);
+  min-width: $width-100;
+  border-radius: $border-radius-200;
+  position: relative;
+  padding: 0 $dim-100;
+  cursor: pointer;
+}
+
+// Fade all icons
+%button > i {
+  opacity: .75;
+}
+
+%button:hover > i {
+  opacity: 1;
+}
+
+%button-pressed {
+  top: 1px;
+  border-bottom: 1px solid $heliotrope;
+  background: darken($heliotrope, 5%);
+}
+
+%button-disabled {
+  background: rgba($dove-gray, .6);
+  border-bottom: 2px solid darken(rgba($dove-gray, .6), 10%);
+}
+
+
+%placeholder {
+  @extend %h5;
+  height: 120px;
+  line-height: 120px;
+  text-align: center;
+  background: $gallery;
+  border-radius: 5px;
+  color: $dove-gray;
+  font-weight: bold;
+}
